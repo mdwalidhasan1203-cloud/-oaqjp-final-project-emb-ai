@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emotion Detector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 640px;
+            margin: 60px auto;
+            padding: 0 20px;
+            color: #222;
+        }
+        h1 {
+            font-size: 1.6rem;
+            margin-bottom: 0.2rem;
+        }
+        p.subtitle {
+            color: #666;
+            margin-top: 0;
+        }
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            font-size: 1rem;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+        }
+        button {
+            margin-top: 12px;
+            padding: 10px 22px;
+            font-size: 1rem;
+            background: #2c6bed;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1e54c4;
+        }
+        #result {
+            margin-top: 24px;
+            padding: 14px;
+            border-radius: 6px;
+            background: #f4f6fb;
+            min-height: 24px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Emotion Detector</h1>
+    <p class="subtitle">Enter some text and see which emotions it expresses.</p>
+
+    <textarea id="textToAnalyze" placeholder="Type or paste text here..."></textarea>
+    <br>
+    <button onclick="RunSentimentAnalysis()">Analyze</button>
+
+    <div id="result"></div>
+
+    <script>
+        function RunSentimentAnalysis() {
+            const textToAnalyze = document.getElementById("textToAnalyze").value;
+            const resultDiv = document.getElementById("result");
+
+            if (!textToAnalyze || textToAnalyze.trim() === "") {
+                resultDiv.textContent = "Please enter some text.";
+                return;
+            }
+
+            resultDiv.textContent = "Analyzing...";
+
+            fetch(`/emotionDetector?textToAnalyze=${encodeURIComponent(textToAnalyze)}`)
+                .then(response => response.text())
+                .then(data => {
+                    resultDiv.textContent = data;
+                })
+                .catch(() => {
+                    resultDiv.textContent = "Something went wrong. Please try again.";
+                });
+        }
+    </script>
+</body>
+</html>
