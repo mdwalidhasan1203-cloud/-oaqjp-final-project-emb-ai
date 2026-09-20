@@ -1,5 +1,7 @@
 # Emotion Detection Application
 
+This repository contains the Final Project for the Emotion Detector course.
+
 An emotion detection application that analyzes text using the Watson NLP
 EmotionPredict service, packaged as a Python module with a Flask web
 front end.
